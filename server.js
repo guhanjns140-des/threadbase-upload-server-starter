@@ -1,3 +1,4 @@
+import uploadRouter from "./routes/upload.routes.js";
 import "dotenv/config";
 import express from "express";
 import cors from "cors";
@@ -9,9 +10,11 @@ import verifyToken from "./middleware/verifyToken.js";
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 app.use("/auth", authRouter);          // provided scaffold — issues tokens
 app.use("/api/threads", threadsRouter);
+app.use("/api", uploadRouter);
 
 // Protected route GET /api/me
 app.get("/api/me", verifyToken, (req, res) => {
